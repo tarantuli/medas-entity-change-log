@@ -1,8 +1,8 @@
 {
-    "name": "morphp/medas-placeholder",
-    "description": "Medas placeholder",
+    "name": "morphp/medas-entity-changelog",
+    "description": "Medas entity  changelog",
     "keywords": [
-        "placeholder"
+        "entities"
     ],
     "authors": [
         {
@@ -14,7 +14,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "morphp/medas-core": "dev-dev"
+        "morphp/medas-core": "dev-dev",
+        "morphp/medas-entity-manager": "dev-dev"
     },
     "require-dev": {
         "morphp/medas-service-manager": "dev-dev",
@@ -22,8 +23,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Medas\\Placeholder\\": "src/",
-            "Medas\\PlaceholderTest\\": "tests/"
+            "Medas\\EntitiesChangelog\\": "src/",
+            "Medas\\EntitiesChangelogTest\\": "tests/"
         }
     }
 }
