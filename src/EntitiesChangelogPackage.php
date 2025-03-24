@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Medas\EntitiesChangelog;
 
 use Medas\Core\AsSingleton;
+use Medas\EntityEvents\EntityEventsPackage;
 use Medas\ServiceManager\BasePackage;
 
 class EntitiesChangelogPackage extends BasePackage
@@ -13,7 +14,9 @@ class EntitiesChangelogPackage extends BasePackage
 
     public function dependencies(): array
     {
-        return [];
+        return [
+            EntityEventsPackage::instance(),
+        ];
     }
 
     public function sourceDirectory(): string
