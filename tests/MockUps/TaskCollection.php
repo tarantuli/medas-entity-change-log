@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Medas\EntitiesChangelogTest\MockUps;
+namespace Medas\EntitiesChangeLogTest\MockUps;
 
 use Medas\EntityManager\Attributes\EntityCollection;
 use Medas\StorageManager\Entities\RecordCollection;

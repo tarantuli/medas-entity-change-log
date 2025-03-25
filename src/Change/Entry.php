@@ -2,17 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Medas\EntitiesChangelog\Change;
+namespace Medas\EntitiesChangeLog\Change;
 
-use Medas\EntitiesChangelog\{
+use Medas\Core\Interfaces\HasId;
+use Medas\EntitiesChangeLog\{
     Change\Entity as ChangEntity,
-    ConfigOptions\ChangelogStorage,
-    ConfigOptions\ChangeStoreName
+    ConfigOptions\ChangeLogStorage,
+    ConfigOptions\EntriesStoreName
 };
 use Medas\EntityManager\Attributes\{Entity, Id, IsCreationTimestamp, IsGeneratedValue};
 
-#[Entity, Entity\StorageConfigOption(ChangelogStorage::class), Entity\StoreConfigOption(ChangeStoreName::class)]
-class Entry
+#[Entity, Entity\StorageConfigOption(ChangeLogStorage::class), Entity\StoreConfigOption(EntriesStoreName::class)]
+class Entry implements HasId
 {
     #[Id, IsGeneratedValue]
     public int $id;
@@ -25,4 +26,9 @@ class Entry
     public Type $type;
     public Property|null $property;
     public string|null $connectionId;
+
+    public function id(): int
+    {
+        return $this->id;
+    }
 }

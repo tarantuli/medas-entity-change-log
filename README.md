@@ -1,3 +1,3 @@
-# medas-entity-changelog
+# medas-entity-change-log
 
 Part of the [Medas framework](https://github.com/tarantuli/medas-core).

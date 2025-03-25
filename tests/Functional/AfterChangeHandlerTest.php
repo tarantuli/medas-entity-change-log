@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Medas\EntitiesChangelogTest\Functional;
+namespace Medas\EntitiesChangeLogTest\Functional;
 
-use Medas\EntitiesChangelog\AfterChangeHandler;
-use Medas\EntitiesChangelogTest\MockUps\Task;
+use Medas\EntitiesChangeLog\AfterChangeHandler;
+use Medas\EntitiesChangeLogTest\MockUps\Task;
 use Medas\EntityManager\Entities\Changes;
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +13,7 @@ class AfterChangeHandlerTest extends TestCase
 {
     public function testCreation(): void
     {
-        $task = new Task('Test changelog');
+        $task = new Task('Test change log');
 
         em()->persist($task);
         em()->flush();

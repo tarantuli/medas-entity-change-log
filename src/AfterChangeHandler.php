@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Medas\EntitiesChangelog;
+namespace Medas\EntitiesChangeLog;
 
 use Medas\Core\Attributes\Service;
 use Medas\EntityManager\{
@@ -26,8 +26,10 @@ readonly class AfterChangeHandler implements AfterFlushHandler
     {
         $job = $this->processChanges($changes);
 
-        em()->persist(...$job->entries);
-        em()->flush();
+        if ($job->dispatchedEvents) {
+            em()->persist(...$job->entries);
+            em()->flush();
+        }
 
         return (bool) $job->changes;
     }
@@ -83,6 +85,10 @@ readonly class AfterChangeHandler implements AfterFlushHandler
     private function handleEntities(Job $job, array $entities, callable $processor): void
     {
         foreach ($entities as $entity) {
+            if (str_starts_with($entity::class, 'Medas\EntitiesChangeLog\\')) {
+                continue;
+            }
+
             if (attribute(Attributes\LogChanges::class, new \ReflectionClass($entity))) {
                 $processor($entity);
 

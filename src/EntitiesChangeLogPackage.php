@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Medas\EntitiesChangelog;
+namespace Medas\EntitiesChangeLog;
 
 use Medas\Core\AsSingleton;
 use Medas\EntityEvents\EntityEventsPackage;
 use Medas\ServiceManager\BasePackage;
 
-class EntitiesChangelogPackage extends BasePackage
+class EntitiesChangeLogPackage extends BasePackage
 {
     use AsSingleton;
 

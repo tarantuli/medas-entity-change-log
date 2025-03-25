@@ -1,75 +1,25 @@
 {
     "keyName": "id",
     "fieldNames": [
-        "description",
-        "isActive"
+        "id",
+        "isActive",
+        "description"
     ],
-    "defaults": [],
+    "defaults": {
+        "id": null,
+        "isActive": true,
+        "description": null
+    },
     "data": {
         "1": {
+            "id": 1,
             "isActive": "1",
-            "description": "Test changelog"
+            "description": "Test change log"
         },
         "2": {
+            "id": 2,
             "isActive": "1",
-            "description": "Test changelog"
-        },
-        "3": {
-            "isActive": "1",
-            "description": "Test changelog"
-        },
-        "4": {
-            "isActive": "1",
-            "description": "Test changelog"
-        },
-        "5": {
-            "isActive": "1",
-            "description": "Test changelog"
-        },
-        "6": {
-            "isActive": "1",
-            "description": "Test changelog"
-        },
-        "7": {
-            "isActive": "1",
-            "description": "Test changelog"
-        },
-        "8": {
-            "isActive": "1",
-            "description": "Test changelog"
-        },
-        "9": {
-            "isActive": "1",
-            "description": "Test changelog"
-        },
-        "10": {
-            "isActive": "1",
-            "description": "Test changelog"
-        },
-        "11": {
-            "id": 11,
-            "isActive": "1",
-            "description": "Test changelog"
-        },
-        "12": {
-            "id": 12,
-            "isActive": "1",
-            "description": "Test changelog"
-        },
-        "13": {
-            "id": 13,
-            "isActive": "1",
-            "description": "Test changelog"
-        },
-        "14": {
-            "id": 14,
-            "isActive": "1",
-            "description": "Test changelog"
-        },
-        "15": {
-            "id": 15,
-            "isActive": "1",
-            "description": "Test changelog"
+            "description": "Test change log"
         }
     }
 }

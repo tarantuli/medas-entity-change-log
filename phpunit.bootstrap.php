@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Medas\ConfigManager\ConfigManagerPackage;
-use Medas\EntitiesChangelog\EntitiesChangelogPackage;
+use Medas\EntitiesChangeLog\EntitiesChangeLogPackage;
 use Medas\JsonStorage\JsonStoragePackage;
 use Medas\JsonStorage\StorageDirectory;
 use Medas\ServiceManager\{ServiceConfig, ServiceManager};
@@ -15,7 +15,7 @@ new ServiceManager(function (): ServiceConfig {
     $config = new ServiceConfig();
 
     $config->addPackages([
-        EntitiesChangelogPackage::instance(),
+        EntitiesChangeLogPackage::instance(),
         JsonStoragePackage::instance(),
         ConfigManagerPackage::instance(),
     ]);

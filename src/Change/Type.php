@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Medas\EntitiesChangelog\Change;
+namespace Medas\EntitiesChangeLog\Change;
 
 enum Type: int
 {

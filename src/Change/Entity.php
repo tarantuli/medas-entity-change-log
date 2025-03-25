@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Medas\EntitiesChangelog\Change;
+namespace Medas\EntitiesChangeLog\Change;
 
-use Medas\EntitiesChangelog\ConfigOptions\{ChangeEntityName, ChangelogStorage};
+use Medas\Core\Interfaces\HasId;
+use Medas\EntitiesChangeLog\ConfigOptions\{ChangeLogStorage, EntityNamesStore};
 use Medas\EntityManager\Attributes\{
     Entity as EntityAttribute,
     Entity\StorageConfigOption,
@@ -15,8 +16,8 @@ use Medas\EntityManager\Attributes\{
 };
 use Medas\EntityManager\Types\Binary;
 
-#[EntityAttribute, StorageConfigOption(ChangelogStorage::class), StoreConfigOption(ChangeEntityName::class)]
-class Entity
+#[EntityAttribute, StorageConfigOption(ChangeLogStorage::class), StoreConfigOption(EntityNamesStore::class)]
+class Entity implements HasId
 {
     #[Id, IsGeneratedValue]
     public int $id;
@@ -25,4 +26,9 @@ class Entity
     public string $nameHash;
 
     public string $name;
+
+    public function id(): int
+    {
+        return $this->id;
+    }
 }

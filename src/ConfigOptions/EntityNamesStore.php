@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Medas\EntitiesChangelog\ConfigOptions;
+namespace Medas\EntitiesChangeLog\ConfigOptions;
 
 use Medas\Core\{Attributes\Service, Interfaces\ConfigGroup, Interfaces\ConfigOption};
 use Medas\EntityManager\ConfigOptions\StoreNamesGroup;
 
 #[Service]
-readonly class ChangeStoreName implements ConfigOption
+readonly class EntityNamesStore implements ConfigOption
 {
     public function __construct(
         private StoreNamesGroup $group,
@@ -23,12 +23,12 @@ readonly class ChangeStoreName implements ConfigOption
 
     public function name(): string
     {
-        return 'entity-changelog-entries';
+        return 'entity-change-log-entity-names';
     }
 
     public function description(): string
     {
-        return 'The name of the store where entity changelog changes will be stored';
+        return 'The name of the store where entity change log entity names will be stored';
     }
 
     public function hasDefault(): bool
@@ -38,6 +38,6 @@ readonly class ChangeStoreName implements ConfigOption
 
     public function default(): string
     {
-        return 'entity-changelog-changes';
+        return 'entity-change-log-entities';
     }
 }

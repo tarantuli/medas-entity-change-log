@@ -2,14 +2,12 @@
     "keyName": "id",
     "fieldNames": [
         "id",
-        "isActive",
-        "tasks",
+        "nameHash",
         "name"
     ],
     "defaults": {
         "id": null,
-        "isActive": true,
-        "tasks": [],
+        "nameHash": null,
         "name": null
     },
     "data": []

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "741de591301b9cccaa7a69177315fdd1",
+    "content-hash": "8d9b93b2d3ddb14dd06c6079d402d32a",
     "packages": [
         {
             "name": "morphp/medas-console",
@@ -159,12 +159,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-entity-manager.git",
-                "reference": "1df0b935fc49d7bcbf58af64fa7b9f77ab3444ec"
+                "reference": "ba2edc54e368ee385bdb6691800232e8afd77ba0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-entity-manager/zipball/1df0b935fc49d7bcbf58af64fa7b9f77ab3444ec",
-                "reference": "1df0b935fc49d7bcbf58af64fa7b9f77ab3444ec",
+                "url": "https://api.github.com/repos/tarantuli/medas-entity-manager/zipball/ba2edc54e368ee385bdb6691800232e8afd77ba0",
+                "reference": "ba2edc54e368ee385bdb6691800232e8afd77ba0",
                 "shasum": ""
             },
             "require": {
@@ -201,7 +201,7 @@
                 "source": "https://github.com/tarantuli/medas-entity-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-entity-manager/issues"
             },
-            "time": "2025-03-24T14:12:02+00:00"
+            "time": "2025-03-25T15:09:29+00:00"
         },
         {
             "name": "morphp/medas-events",
@@ -1047,12 +1047,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-storage-manager.git",
-                "reference": "a251d3dc16b3a65867c114053dc094af2c3939ac"
+                "reference": "e39d234cd3168ecb4d212e3bc599834718daa7bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/a251d3dc16b3a65867c114053dc094af2c3939ac",
-                "reference": "a251d3dc16b3a65867c114053dc094af2c3939ac",
+                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/e39d234cd3168ecb4d212e3bc599834718daa7bc",
+                "reference": "e39d234cd3168ecb4d212e3bc599834718daa7bc",
                 "shasum": ""
             },
             "require": {
@@ -1096,7 +1096,7 @@
                 "source": "https://github.com/tarantuli/medas-storage-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-storage-manager/issues"
             },
-            "time": "2024-12-12T14:44:12+00:00"
+            "time": "2025-03-25T15:12:00+00:00"
         },
         {
             "name": "myclabs/deep-copy",
