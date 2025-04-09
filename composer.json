@@ -20,6 +20,7 @@
     "require-dev": {
         "morphp/medas-config-manager": "dev-dev",
         "morphp/medas-json-storage": "dev-dev",
+        "morphp/medas-ramsey-uuid-bridge": "dev-dev",
         "morphp/medas-service-manager": "dev-dev",
         "phpunit/phpunit": "^9.5"
     },

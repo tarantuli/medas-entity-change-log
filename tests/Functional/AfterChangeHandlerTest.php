@@ -44,8 +44,6 @@ class AfterChangeHandlerTest extends TestCase
 
         $job = service(AfterChangeHandler::class)->processChanges($changes);
 
-        funcdump($job);
-
         self::assertCount(1, $job->entries);
     }
 }

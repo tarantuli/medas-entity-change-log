@@ -124,7 +124,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
         return $this->repository->getOrCreate(
             Change\Entity::class,
             ['nameHash' => sha1($entity::class, true)],
-            fn() => ['name' => $entity::class]
+            fn() => ['name' => $entity::class],
         );
     }
 }

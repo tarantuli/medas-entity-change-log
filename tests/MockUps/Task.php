@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Medas\EntitiesChangeLogTest\MockUps;
 
+use Medas\Core\Interfaces\{Guid, HasId};
 use Medas\EntitiesChangeLog\Attributes\LogChanges;
-use Medas\EntityManager\Attributes\{Entity, Id, IsGeneratedValue};
+use Medas\EntityManager\Attributes\{Entity, Id};
 
 #[Entity('tasks'), LogChanges]
-class Task
+class Task implements HasId
 {
-    #[Id, IsGeneratedValue]
-    public int $id;
+    #[Id]
+    public Guid $id;
 
     public bool $isActive = true;
 
@@ -19,5 +20,10 @@ class Task
         public string $description,
     )
     {
+    }
+
+    public function id(): Guid
+    {
+        return $this->id;
     }
 }

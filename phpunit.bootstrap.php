@@ -6,6 +6,7 @@ use Medas\ConfigManager\ConfigManagerPackage;
 use Medas\EntitiesChangeLog\EntitiesChangeLogPackage;
 use Medas\JsonStorage\JsonStoragePackage;
 use Medas\JsonStorage\StorageDirectory;
+use Medas\RamseyUuidBridge\RamseyUuidBridgePackage;
 use Medas\ServiceManager\{ServiceConfig, ServiceManager};
 use Medas\StorageManager\StorageManager;
 
@@ -17,6 +18,7 @@ new ServiceManager(function (): ServiceConfig {
     $config->addPackages([
         EntitiesChangeLogPackage::instance(),
         JsonStoragePackage::instance(),
+        RamseyUuidBridgePackage::instance(),
         ConfigManagerPackage::instance(),
     ]);
 
