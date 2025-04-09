@@ -1047,12 +1047,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-storage-manager.git",
-                "reference": "e39d234cd3168ecb4d212e3bc599834718daa7bc"
+                "reference": "4557d8c2d61d9af8a4a3a56c41c60b013e10d044"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/e39d234cd3168ecb4d212e3bc599834718daa7bc",
-                "reference": "e39d234cd3168ecb4d212e3bc599834718daa7bc",
+                "url": "https://api.github.com/repos/tarantuli/medas-storage-manager/zipball/4557d8c2d61d9af8a4a3a56c41c60b013e10d044",
+                "reference": "4557d8c2d61d9af8a4a3a56c41c60b013e10d044",
                 "shasum": ""
             },
             "require": {
@@ -1096,7 +1096,7 @@
                 "source": "https://github.com/tarantuli/medas-storage-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-storage-manager/issues"
             },
-            "time": "2025-03-25T15:12:00+00:00"
+            "time": "2025-04-09T13:44:30+00:00"
         },
         {
             "name": "myclabs/deep-copy",
