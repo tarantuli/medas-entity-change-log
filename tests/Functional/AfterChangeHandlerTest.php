@@ -26,4 +26,26 @@ class AfterChangeHandlerTest extends TestCase
 
         self::assertCount(1, $job->entries);
     }
+
+    public function testUpdate(): void
+    {
+        $task = new Task('Test change log');
+
+        em()->persist($task);
+        em()->flush();
+
+        $task->description = 'new description';
+
+        em()->flush();
+
+        $changes = new Changes();
+
+        $changes->addUpdate($task, ['description' => 'new description']);
+
+        $job = service(AfterChangeHandler::class)->processChanges($changes);
+
+        funcdump($job);
+
+        self::assertCount(1, $job->entries);
+    }
 }

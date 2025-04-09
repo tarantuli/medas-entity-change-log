@@ -53,10 +53,21 @@ readonly class AfterChangeHandler implements AfterFlushHandler
         $this->handleEntities(
             $job,
             $changes->deletedEntities(),
-            fn($entity) => $this->logCreation($job, $entity)
+            fn($entity) => $this->logDeletion($job, $entity)
         );
 
         return $job;
+    }
+
+    private function logCreation(Job $job, object $entity): void
+    {
+        $entry = new Change\Entry();
+
+        $entry->dateTime = new \DateTime();
+        $entry->entity = $this->getChangeEntity($entity);
+        $entry->entityId = (string) $this->idValue->fromEntity($entity);
+        $entry->type = Change\Type::EntityCreation;
+        $job->entries[] = $entry;
     }
 
     private function logChanges(Job $job, object $entity): void
@@ -97,14 +108,14 @@ readonly class AfterChangeHandler implements AfterFlushHandler
         }
     }
 
-    private function logCreation(Job $job, object $entity): void
+    private function logDeletion(Job $job, $entity): void
     {
         $entry = new Change\Entry();
 
         $entry->dateTime = new \DateTime();
         $entry->entity = $this->getChangeEntity($entity);
         $entry->entityId = (string) $this->idValue->fromEntity($entity);
-        $entry->type = Change\Type::EntityCreation;
+        $entry->type = Change\Type::EntityDeletion;
         $job->entries[] = $entry;
     }
 
