@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Medas\EntitiesChangeLog\Change;
+namespace Medas\EntityChangeLog\Change;
 
 use Medas\Core\Interfaces\{Guid, HasId};
-use Medas\EntitiesChangeLog\{
+use Medas\EntityChangeLog\{
     Change\Entity as ChangEntity,
     ConfigOptions\ChangeLogStorage,
     ConfigOptions\EntriesStoreName

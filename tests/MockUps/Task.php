@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Medas\EntitiesChangeLogTest\MockUps;
+namespace Medas\EntityChangeLogTest\MockUps;
 
 use Medas\Core\Interfaces\{Guid, HasId};
-use Medas\EntitiesChangeLog\Attributes\LogChanges;
+use Medas\EntityChangeLog\Attributes\LogChanges;
 use Medas\EntityManager\Attributes\{Entity, Id};
 
 #[Entity('tasks'), LogChanges]

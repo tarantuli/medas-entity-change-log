@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Medas\EntitiesChangeLog\ConfigOptions;
+namespace Medas\EntityChangeLog\ConfigOptions;
 
 use Medas\Core\{Attributes\Service, Interfaces\ConfigGroup, Interfaces\ConfigOption};
 use Medas\EntityManager\ConfigOptions\StoreNamesGroup;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Medas\EntitiesChangeLog\Attributes;
+namespace Medas\EntityChangeLog\Attributes;
 
 #[\Attribute(\Attribute::TARGET_CLASS)]
 class LogChanges

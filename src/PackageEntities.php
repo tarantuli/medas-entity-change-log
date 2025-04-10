@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Medas\EntitiesChangeLog;
+namespace Medas\EntityChangeLog;
 
 use Medas\Core\Attributes\Service;
 use Medas\StorageManager\Interfaces\PackageEntities as PackageEntitiesInterface;

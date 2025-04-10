@@ -26,8 +26,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Medas\\EntitiesChangeLog\\": "src/",
-            "Medas\\EntitiesChangeLogTest\\": "tests/"
+            "Medas\\EntityChangeLog\\": "src/",
+            "Medas\\EntityChangeLogTest\\": "tests/"
         }
     }
 }

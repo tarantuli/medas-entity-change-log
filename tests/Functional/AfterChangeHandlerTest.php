@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Medas\EntitiesChangeLogTest\Functional;
+namespace Medas\EntityChangeLogTest\Functional;
 
-use Medas\EntitiesChangeLog\AfterChangeHandler;
-use Medas\EntitiesChangeLogTest\MockUps\Task;
+use Medas\EntityChangeLog\AfterChangeHandler;
+use Medas\EntityChangeLogTest\MockUps\Task;
 use Medas\EntityManager\Entities\Changes;
 use PHPUnit\Framework\TestCase;
 
