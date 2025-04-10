@@ -28,7 +28,6 @@ readonly class AfterChangeHandler implements AfterFlushHandler
 
         if ($job->dispatchedEvents) {
             em()->persist(...$job->entries);
-            em()->flush();
         }
 
         return (bool) $job->changes;
@@ -89,7 +88,8 @@ readonly class AfterChangeHandler implements AfterFlushHandler
         return $this->repository->getOrCreate(
             Change\Property::class,
             ['nameHash' => sha1($name, true)],
-            fn() => ['name' => $name]
+            fn() => ['name' => $name],
+            flushOnPersist: false
         );
     }
 
@@ -125,6 +125,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
             Change\Entity::class,
             ['nameHash' => sha1($entity::class, true)],
             fn() => ['name' => $entity::class],
+            persistOnCreate: false
         );
     }
 }
