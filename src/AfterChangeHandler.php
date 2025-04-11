@@ -72,6 +72,10 @@ readonly class AfterChangeHandler implements AfterFlushHandler
     private function logChanges(Job $job, object $entity): void
     {
         foreach ($job->changes->entityChanges($entity) as $property => $entry) {
+            if (attribute(Attributes\DontLogChanges::class, new \ReflectionProperty($entity, $property))) {
+                continue;
+            }
+
             $entry = new Change\Entry();
 
             $entry->dateTime = new \DateTime();
