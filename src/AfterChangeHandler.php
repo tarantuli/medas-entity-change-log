@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Medas\EntityChangeLog;
 
 use Medas\Core\Attributes\Service;
-use Medas\EntityManager\{
-    Entities\AfterFlushHandler,
-    Entities\Changes,
-    Entities\IdValue,
-    Repository
-};
+use Medas\EntityManager\Attributes\Changes\{DontLogChanges, LogChanges};
+use Medas\EntityManager\Entities\{AfterFlushHandler, Changes, IdValue};
+use Medas\EntityManager\Repository;
 
 #[Service]
 readonly class AfterChangeHandler implements AfterFlushHandler
@@ -72,7 +69,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
     private function logChanges(Job $job, object $entity): void
     {
         foreach ($job->changes->entityChanges($entity) as $property => $entry) {
-            if (attribute(Attributes\DontLogChanges::class, new \ReflectionProperty($entity, $property))) {
+            if (attribute(DontLogChanges::class, new \ReflectionProperty($entity, $property))) {
                 continue;
             }
 
@@ -104,7 +101,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
                 continue;
             }
 
-            if (attribute(Attributes\LogChanges::class, new \ReflectionClass($entity))) {
+            if (attribute(LogChanges::class, new \ReflectionClass($entity))) {
                 $processor($entity);
 
                 $job->dispatchedEvents = true;
