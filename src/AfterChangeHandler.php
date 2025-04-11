@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace Medas\EntityChangeLog;
 
+use Jfcherng\Diff\{DiffHelper, Renderer\RendererConstant};
 use Medas\Core\Attributes\Service;
 use Medas\EntityManager\Attributes\Changes\{DontLogChanges, LogChanges};
-use Medas\EntityManager\Entities\{AfterFlushHandler, Changes, IdValue};
+use Medas\EntityManager\Entities\{AfterFlushHandler, IdValue};
 use Medas\EntityManager\Repository;
+use Medas\EntityManager\Snapshots\Changes;
+use Medas\StorageManager\Shared\ValueSerializer;
 
 #[Service]
 readonly class AfterChangeHandler implements AfterFlushHandler
 {
     public function __construct(
-        private IdValue    $idValue,
-        private Repository $repository,
+        private IdValue         $idValue,
+        private Repository      $repository,
+        private ValueSerializer $valueSerializer,
     )
     {
     }
@@ -62,13 +66,13 @@ readonly class AfterChangeHandler implements AfterFlushHandler
         $entry->dateTime = new \DateTime();
         $entry->entity = $this->getChangeEntity($entity);
         $entry->entityId = (string) $this->idValue->fromEntity($entity);
-        $entry->type = Change\Type::EntityCreation;
+        $entry->type = Change\EntryType::EntityCreation;
         $job->entries[] = $entry;
     }
 
     private function logChanges(Job $job, object $entity): void
     {
-        foreach ($job->changes->entityChanges($entity) as $property => $entry) {
+        foreach ($job->changes->entityChanges($entity) as $property => $propertyChange) {
             if (attribute(DontLogChanges::class, new \ReflectionProperty($entity, $property))) {
                 continue;
             }
@@ -78,8 +82,25 @@ readonly class AfterChangeHandler implements AfterFlushHandler
             $entry->dateTime = new \DateTime();
             $entry->entity = $this->getChangeEntity($entity);
             $entry->entityId = (string) $this->idValue->fromEntity($entity);
-            $entry->type = Change\Type::PropertyChange;
+            $entry->type = Change\EntryType::PropertyChange;
             $entry->property = $this->getChangeProperty($property);
+            $previous = $this->valueSerializer->serialize($propertyChange->previous);
+            $current = $this->valueSerializer->serialize($propertyChange->current);
+
+            $diff = gzdeflate(DiffHelper::calculate($previous . "\n", $current . "\n", differOptions: [
+                'context' => 1,
+                'cliColorization' => RendererConstant::CLI_COLOR_DISABLE,
+            ]));
+
+            if (strlen($current) <= strlen($diff)) {
+                $entry->changeType = Change\ChangeType::NewValue;
+                $entry->change = $current;
+            }
+            else {
+                $entry->changeType = Change\ChangeType::Diff;
+                $entry->change = $diff;
+            }
+
             $job->entries[] = $entry;
         }
     }
@@ -116,7 +137,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
         $entry->dateTime = new \DateTime();
         $entry->entity = $this->getChangeEntity($entity);
         $entry->entityId = (string) $this->idValue->fromEntity($entity);
-        $entry->type = Change\Type::EntityDeletion;
+        $entry->type = Change\EntryType::EntityDeletion;
         $job->entries[] = $entry;
     }
 
@@ -126,7 +147,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
             Change\Entity::class,
             ['nameHash' => sha1($entity::class, true)],
             fn() => ['name' => $entity::class],
-            persistOnCreate: false
+            flushOnPersist: false
         );
     }
 }

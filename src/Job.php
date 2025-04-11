@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\EntityChangeLog;
 
-use Medas\EntityManager\Entities\Changes;
+use Medas\EntityManager\Snapshots\Changes;
 
 class Job
 {

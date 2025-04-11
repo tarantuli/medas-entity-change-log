@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\EntityChangeLog\Change;
 
-enum Type: int
+enum EntryType: int
 {
     case EntityDeletion = 0;
     case EntityCreation = 1;

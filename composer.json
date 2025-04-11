@@ -15,7 +15,9 @@
     "prefer-stable": true,
     "require": {
         "morphp/medas-core": "dev-dev",
-        "morphp/medas-entity-events": "dev-dev"
+        "morphp/medas-entity-events": "dev-dev",
+        "jfcherng/php-diff": "^6.16",
+        "ext-zlib": "*"
     },
     "require-dev": {
         "morphp/medas-config-manager": "dev-dev",

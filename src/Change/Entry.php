@@ -10,7 +10,13 @@ use Medas\EntityChangeLog\{
     ConfigOptions\ChangeLogStorage,
     ConfigOptions\EntriesStoreName
 };
-use Medas\EntityManager\Attributes\{Entity, Id, IsCreationTimestamp};
+use Medas\EntityManager\{
+    Attributes\Entity,
+    Attributes\Id,
+    Attributes\IsCreationTimestamp,
+    Types\Binary,
+    Types\Text
+};
 
 #[Entity, Entity\StorageConfigOption(ChangeLogStorage::class), Entity\StoreConfigOption(EntriesStoreName::class)]
 class Entry implements HasId
@@ -23,8 +29,13 @@ class Entry implements HasId
 
     public ChangEntity $entity;
     public string $entityId;
-    public Type $type;
+    public EntryType $type;
     public Property|null $property;
+    public ChangeType|null $changeType;
+
+    #[Text(maxLength: Binary::MAX_2_BYTE_LENGTH)]
+    public string|null $change;
+
     public string|null $connectionId;
 
     public function id(): Guid
