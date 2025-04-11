@@ -16,6 +16,7 @@
     "require": {
         "morphp/medas-core": "dev-dev",
         "morphp/medas-entity-events": "dev-dev",
+        "morphp/medas-json": "dev-dev",
         "jfcherng/php-diff": "^6.16",
         "ext-zlib": "*"
     },

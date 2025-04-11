@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace Medas\EntityChangeLog;
 
-use Jfcherng\Diff\{DiffHelper, Renderer\RendererConstant};
 use Medas\Core\Attributes\Service;
 use Medas\EntityManager\Attributes\Changes\{DontLogChanges, LogChanges};
 use Medas\EntityManager\Entities\{AfterFlushHandler, IdValue};
 use Medas\EntityManager\Repository;
 use Medas\EntityManager\Snapshots\Changes;
-use Medas\StorageManager\Shared\ValueSerializer;
 
 #[Service]
 readonly class AfterChangeHandler implements AfterFlushHandler
 {
     public function __construct(
-        private IdValue         $idValue,
-        private Repository      $repository,
-        private ValueSerializer $valueSerializer,
+        private IdValue                 $idValue,
+        private PropertyChangeProcessor $propertyChangeProcessor,
+        private Repository              $repository,
     )
     {
     }
@@ -84,22 +82,8 @@ readonly class AfterChangeHandler implements AfterFlushHandler
             $entry->entityId = (string) $this->idValue->fromEntity($entity);
             $entry->type = Change\EntryType::PropertyChange;
             $entry->property = $this->getChangeProperty($property);
-            $previous = $this->valueSerializer->serialize($propertyChange->previous);
-            $current = $this->valueSerializer->serialize($propertyChange->current);
 
-            $diff = gzdeflate(DiffHelper::calculate($previous . "\n", $current . "\n", differOptions: [
-                'context' => 1,
-                'cliColorization' => RendererConstant::CLI_COLOR_DISABLE,
-            ]));
-
-            if (strlen($current) <= strlen($diff)) {
-                $entry->changeType = Change\ChangeType::NewValue;
-                $entry->change = $current;
-            }
-            else {
-                $entry->changeType = Change\ChangeType::Diff;
-                $entry->change = $diff;
-            }
+            $this->propertyChangeProcessor->process($propertyChange, $entry);
 
             $job->entries[] = $entry;
         }
