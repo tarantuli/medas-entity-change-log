@@ -14,8 +14,7 @@ use Medas\EntityManager\{
     Attributes\Entity,
     Attributes\Id,
     Attributes\IsCreationTimestamp,
-    Types\Binary,
-    Types\Text
+    Types\Binary
 };
 
 #[Entity, Entity\StorageConfigOption(ChangeLogStorage::class), Entity\StoreConfigOption(EntriesStoreName::class)]
