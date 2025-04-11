@@ -33,7 +33,7 @@ class Entry implements HasId
     public Property|null $property;
     public ChangeType|null $changeType;
 
-    #[Text(maxLength: Binary::MAX_2_BYTE_LENGTH)]
+    #[Binary(maxLength: Binary::MAX_2_BYTE_LENGTH)]
     public string|null $change;
 
     public string|null $connectionId;
