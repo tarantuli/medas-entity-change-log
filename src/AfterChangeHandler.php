@@ -66,31 +66,48 @@ readonly class AfterChangeHandler implements AfterFlushHandler
         $entry->entityId = (string) $this->idValue->fromEntity($entity);
         $entry->type = Change\EntryType::EntityCreation;
         $job->entries[] = $entry;
+
+        foreach ($job->changes->createValues($entity) as $property => $propertyChange) {
+            $this->processProperty($job, $entity, $property, null, $propertyChange->current);
+        }
     }
 
     private function logChanges(Job $job, object $entity): void
     {
         foreach ($job->changes->entityChanges($entity) as $property => $propertyChange) {
-            if (attribute(DontLogChanges::class, new \ReflectionProperty($entity, $property))) {
-                continue;
-            }
-
-            $entry = new Change\Entry();
-
-            $entry->dateTime = new \DateTime();
-            $entry->entity = $this->getChangeEntity($entity);
-            $entry->entityId = (string) $this->idValue->fromEntity($entity);
-            $entry->type = Change\EntryType::PropertyChange;
-            $entry->property = $this->getChangeProperty($property);
-
-            $this->entryController->setChange(
-                $entry,
+            $this->processProperty(
+                $job,
+                $entity,
+                $property,
                 $propertyChange->previous,
                 $propertyChange->current
             );
-
-            $job->entries[] = $entry;
         }
+    }
+
+    private function processProperty(
+        Job        $job,
+        object     $entity,
+        int|string $property,
+        mixed      $previous,
+        mixed      $current
+    ): void
+    {
+        if (attribute(DontLogChanges::class, new \ReflectionProperty($entity, $property))) {
+            return;
+        }
+
+        $entry = new Change\Entry();
+
+        $entry->dateTime = new \DateTime();
+        $entry->entity = $this->getChangeEntity($entity);
+        $entry->entityId = (string) $this->idValue->fromEntity($entity);
+        $entry->type = Change\EntryType::PropertyChange;
+        $entry->property = $this->getChangeProperty($property);
+
+        $this->entryController->setChange($entry, $previous, $current);
+
+        $job->entries[] = $entry;
     }
 
     private function getChangeProperty(string $name): mixed
@@ -106,7 +123,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
     private function handleEntities(Job $job, array $entities, callable $processor): void
     {
         foreach ($entities as $entity) {
-            if (str_starts_with($entity::class, 'Medas\EntityChangeLog\\')) {
+            if (str_starts_with($entity::class, 'Medas\\EntityChangeLog\\')) {
                 continue;
             }
 

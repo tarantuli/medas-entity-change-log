@@ -27,46 +27,20 @@ readonly class EntryController
 
     public function setChange(Entry $entry, mixed $previous, mixed $current): void
     {
-        $previous = $this->jsonEncoder->encode($previous, $this->settings);
-        $current = $this->jsonEncoder->encode($current, $this->settings);
+        $previousJson = $this->jsonEncoder->encode($previous, $this->settings);
+        $currentJson = $this->jsonEncoder->encode($current, $this->settings);
 
         $diff = gzdeflate(DiffHelper::calculate(
-            $previous . "\n",
-            $current . "\n",
+            $previousJson . "\n",
+            $currentJson . "\n",
             differOptions: self::DIFFER_OPTIONS
         ));
 
-        if (strlen($current) <= strlen($diff)) {
-            $currentDeflated = gzdeflate($current);
-
-            if (strlen($currentDeflated) < strlen($current)) {
-                $entry->changeType = ChangeType::DeflatedValue;
-                $entry->change = $currentDeflated;
-            }
-            else {
-                $entry->changeType = ChangeType::NewValue;
-                $entry->change = $current;
-            }
-        }
-        else {
-            $entry->changeType = ChangeType::Diff;
-            $entry->change = $diff;
-        }
+        $entry->change = $diff;
     }
 
-    public function getChange(Entry $entry): mixed
+    public function getChange(Entry $entry): string
     {
-        switch ($entry->changeType) {
-            case ChangeType::NewValue:
-                return $this->jsonEncoder->decode($entry->change);
-
-            case ChangeType::DeflatedValue:
-                return $this->jsonEncoder->decode(gzinflate($entry->change));
-
-            case ChangeType::Diff:
-                return gzinflate($entry->change);
-        }
-
-        throw new \Exception('unknown Entry change type ' . $entry->changeType->name);
+        return gzinflate($entry->change);
     }
 }

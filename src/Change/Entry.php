@@ -30,7 +30,6 @@ class Entry implements HasId
     public string $entityId;
     public EntryType $type;
     public Property|null $property;
-    public ChangeType|null $changeType;
 
     #[Binary(maxLength: Binary::MAX_2_BYTE_LENGTH)]
     public string|null $change;
