@@ -14,9 +14,9 @@ use Medas\EntityManager\Snapshots\Changes;
 readonly class AfterChangeHandler implements AfterFlushHandler
 {
     public function __construct(
-        private IdValue                 $idValue,
-        private PropertyChangeProcessor $propertyChangeProcessor,
-        private Repository              $repository,
+        private Change\EntryController $entryController,
+        private IdValue                $idValue,
+        private Repository             $repository,
     )
     {
     }
@@ -83,7 +83,11 @@ readonly class AfterChangeHandler implements AfterFlushHandler
             $entry->type = Change\EntryType::PropertyChange;
             $entry->property = $this->getChangeProperty($property);
 
-            $this->propertyChangeProcessor->process($propertyChange, $entry);
+            $this->entryController->setChange(
+                $entry,
+                $propertyChange->previous,
+                $propertyChange->current
+            );
 
             $job->entries[] = $entry;
         }

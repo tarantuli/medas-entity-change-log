@@ -7,5 +7,6 @@ namespace Medas\EntityChangeLog\Change;
 enum ChangeType: int
 {
     case NewValue = 0;
+    case DeflatedValue = 2;
     case Diff = 1;
 }
