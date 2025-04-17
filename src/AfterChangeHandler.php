@@ -103,21 +103,11 @@ readonly class AfterChangeHandler implements AfterFlushHandler
         $entry->entity = $this->getChangeEntity($entity);
         $entry->entityId = (string) $this->idValue->fromEntity($entity);
         $entry->type = Change\EntryType::PropertyChange;
-        $entry->property = $this->getChangeProperty($property);
+        $entry->property = $property;
 
         $this->entryController->setChange($entry, $previous, $current);
 
         $job->entries[] = $entry;
-    }
-
-    private function getChangeProperty(string $name): mixed
-    {
-        return $this->repository->getOrCreate(
-            Change\Property::class,
-            ['nameHash' => sha1($name, true)],
-            fn() => ['name' => $name],
-            flushOnPersist: false
-        );
     }
 
     private function handleEntities(Job $job, array $entities, callable $processor): void
