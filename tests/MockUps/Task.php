@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Medas\EntityChangeLogTest\MockUps;
 
-use Medas\Core\Interfaces\{Guid,HasId};
-use Medas\EntityManager\Attributes\{Entity,Id};
-use Medas\EntityManager\Attributes\Changes\LogChanges;
+use Medas\Core\Interfaces\{HasId, Uuid};
+use Medas\EntityManager\Attributes\{Changes\LogChanges, Entity, Id};
 
 #[Entity('tasks'), LogChanges]
 class Task implements HasId
 {
     #[Id]
-    public Guid $id;
+    public Uuid $id;
 
     public bool $isActive = true;
 
@@ -22,7 +21,7 @@ class Task implements HasId
     {
     }
 
-    public function id(): Guid
+    public function id(): Uuid
     {
         return $this->id;
     }

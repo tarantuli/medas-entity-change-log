@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\EntityChangeLog\Change;
 
-use Medas\Core\Interfaces\{Guid, HasId};
+use Medas\Core\Interfaces\{HasId, Uuid};
 use Medas\EntityChangeLog\{
     Change\Entity as ChangEntity,
     ConfigOptions\ChangeLogStorage,
@@ -21,7 +21,7 @@ use Medas\EntityManager\{
 class Entry implements HasId
 {
     #[Id]
-    public Guid $id;
+    public Uuid $id;
 
     #[IsCreationTimestamp]
     public \DateTime $dateTime;
@@ -36,7 +36,7 @@ class Entry implements HasId
 
     public string|null $connectionId;
 
-    public function id(): Guid
+    public function id(): Uuid
     {
         return $this->id;
     }
