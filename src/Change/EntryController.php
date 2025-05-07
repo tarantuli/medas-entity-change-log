@@ -28,7 +28,9 @@ readonly class EntryController
     public function setChange(Entry $entry, mixed $previous, mixed $current): void
     {
         $previousJson = $this->jsonEncoder->encode($previous, $this->settings);
+        $previousJson = str_replace('\n', "\n", $previousJson);
         $currentJson = $this->jsonEncoder->encode($current, $this->settings);
+        $currentJson = str_replace('\n', "\n", $currentJson);
 
         $diff = gzdeflate(DiffHelper::calculate(
             $previousJson . "\n",
