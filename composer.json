@@ -15,6 +15,7 @@
     "prefer-stable": true,
     "require": {
         "morphp/medas-core": "dev-dev",
+        "morphp/medas-entity-events": "dev-dev",
         "morphp/medas-entity-manager": "dev-dev",
         "morphp/medas-json": "dev-dev",
         "morphp/medas-storage-manager": "dev-dev",
