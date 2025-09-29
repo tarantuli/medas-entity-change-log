@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace Medas\EntityChangeLog\Change;
 
-use Medas\Core\Interfaces\{HasId, Uuid};
+use Medas\Core\{Interfaces\HasId, Interfaces\Uuid, Types\Binary};
 use Medas\EntityChangeLog\{
     Change\Entity as ChangEntity,
     ConfigOptions\ChangeLogStorage,
     ConfigOptions\EntriesStoreName
 };
-use Medas\EntityManager\{
-    Attributes\Entity,
-    Attributes\Id,
-    Attributes\IsCreationTimestamp,
-    Types\Binary
-};
+use Medas\EntityManager\Attributes\{Entity, Id, IsCreationTimestamp};
 
 #[Entity, Entity\StorageConfigOption(ChangeLogStorage::class), Entity\StoreConfigOption(EntriesStoreName::class)]
 class Entry implements HasId
