@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Medas\EntityChangeLog\Change;
 
 use Jfcherng\Diff\{DiffHelper, Renderer\RendererConstant};
-use Medas\Core\Attributes\Service;
+use Medas\Core\{Attributes\Service, Types\Binary};
 use Medas\Json\{JsonEncoder, Settings};
 
 #[Service]
@@ -37,6 +37,10 @@ readonly class EntryController
             $currentJson . "\n",
             differOptions: self::DIFFER_OPTIONS
         ));
+
+        if (strlen($diff) > Binary::MAX_2_BYTE_LENGTH) {
+            $diff = 'too large to store';
+        }
 
         $entry->change = $diff;
     }
