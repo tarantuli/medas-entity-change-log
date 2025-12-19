@@ -11,7 +11,7 @@ use Medas\Json\{JsonEncoder, Settings};
 #[Service]
 readonly class EntryController
 {
-    private const DIFFER_OPTIONS = [
+    private const array DIFFER_OPTIONS = [
         'context' => 1,
         'cliColorization' => RendererConstant::CLI_COLOR_DISABLE,
     ];
