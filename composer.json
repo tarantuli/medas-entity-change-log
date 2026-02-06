@@ -13,13 +13,14 @@
   ],
   "type": "library",
   "require": {
+    "ext-zlib": "*",
+    "jfcherng/php-diff": "^6.16",
     "morphp/medas-core": "^2",
     "morphp/medas-entity-events": "^2",
     "morphp/medas-entity-manager": "^2",
     "morphp/medas-json": "^2",
     "morphp/medas-storage-manager": "^2",
-    "jfcherng/php-diff": "^6.16",
-    "ext-zlib": "*"
+    "php": "^8.4"
   },
   "require-dev": {
     "morphp/medas-config-manager": "^2",
