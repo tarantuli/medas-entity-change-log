@@ -1,7 +1,7 @@
 {
   "name": "morphp/medas-entity-change-log",
   "description": "Medas entity change log",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "keywords": [
     "entities"
   ],
@@ -15,18 +15,18 @@
   "require": {
     "ext-zlib": "*",
     "jfcherng/php-diff": "^6.16",
-    "morphp/medas-core": "^2",
-    "morphp/medas-entity-events": "^2",
-    "morphp/medas-entity-manager": "^2",
-    "morphp/medas-json": "^2",
-    "morphp/medas-storage-manager": "^2",
-    "php": "^8.4"
+    "morphp/medas-core": "^1",
+    "morphp/medas-entity-events": "^1",
+    "morphp/medas-entity-manager": "^1",
+    "morphp/medas-json": "^1",
+    "morphp/medas-storage-manager": "^1",
+    "php": "^8.2"
   },
   "require-dev": {
-    "morphp/medas-config-manager": "^2",
-    "morphp/medas-json-storage": "^2",
-    "morphp/medas-ramsey-uuid-bridge": "^2",
-    "morphp/medas-service-manager": "^2",
+    "morphp/medas-config-manager": "^1",
+    "morphp/medas-json-storage": "^1",
+    "morphp/medas-ramsey-uuid-bridge": "^1",
+    "morphp/medas-service-manager": "^1",
     "phpunit/phpunit": "^9.5"
   },
   "autoload": {
