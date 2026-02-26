@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\EntityChangeLog;
 
-use Medas\Core\Attributes\Service;
+use Medas\Core\{Attributes\Service, Interfaces\EntityManager};
 use Medas\EntityManager\Attributes\Changes\{DontLogChanges, LogChanges};
 use Medas\EntityManager\Entities\{AfterFlushHandler, IdValue};
 use Medas\EntityManager\Repository;
@@ -15,6 +15,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
 {
     public function __construct(
         private Change\EntryController $entryController,
+        private EntityManager          $entityManager,
         private IdValue                $idValue,
         private Repository             $repository,
     )
@@ -26,7 +27,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
         $job = $this->processChanges($changes);
 
         if ($job->dispatchedEvents) {
-            em()->persist(...$job->entries);
+            $this->entityManager->persist(...$job->entries);
         }
 
         return (bool) $job->changes;
