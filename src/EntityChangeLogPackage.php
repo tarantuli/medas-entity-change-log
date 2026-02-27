@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Medas\EntityChangeLog;
 
-use Medas\Core\AsSingleton;
+use Medas\Core\{AsSingleton, BasePackage};
 use Medas\EntityEvents\EntityEventsPackage;
-use Medas\ServiceManager\BasePackage;
 
 class EntityChangeLogPackage extends BasePackage
 {
