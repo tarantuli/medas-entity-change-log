@@ -5,21 +5,20 @@ declare(strict_types=1);
 namespace Medas\EntityChangeLog\Change;
 
 use Jfcherng\Diff\{DiffHelper, Renderer\RendererConstant};
-use Medas\Core\{Attributes\Service, Types\Binary};
+use Medas\Core\{Attributes\ConfigValue, Attributes\Service, Types\Binary};
+use Medas\EntityChangeLog\ConfigOptions\DiffContextLines;
 use Medas\Json\{JsonEncoder, Settings};
 
 #[Service]
 readonly class EntryController
 {
-    private const array DIFFER_OPTIONS = [
-        'context' => 1,
-        'cliColorization' => RendererConstant::CLI_COLOR_DISABLE,
-    ];
-
     private Settings $settings;
 
     public function __construct(
         private JsonEncoder $jsonEncoder,
+
+        #[ConfigValue(DiffContextLines::class)]
+        private int         $diffContextLines,
     )
     {
         $this->settings = new Settings(prettyPrint: true);
@@ -32,10 +31,15 @@ readonly class EntryController
         $currentJson = $this->jsonEncoder->encode($current, $this->settings);
         $currentJson = str_replace('\n', "\n", $currentJson);
 
+        $differOptions = [
+            'context' => $this->diffContextLines,
+            'cliColorization' => RendererConstant::CLI_COLOR_DISABLE,
+        ];
+
         $diff = gzdeflate(DiffHelper::calculate(
             $previousJson . "\n",
             $currentJson . "\n",
-            differOptions: self::DIFFER_OPTIONS
+            differOptions: $differOptions
         ));
 
         if (strlen($diff) > Binary::MAX_2_BYTE_LENGTH) {
