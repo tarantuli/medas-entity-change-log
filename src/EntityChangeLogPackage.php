@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Medas\EntityChangeLog;
 
 use Medas\Core\{AsSingleton, BasePackage};
-use Medas\EntityEvents\EntityEventsPackage;
 
 class EntityChangeLogPackage extends BasePackage
 {
@@ -13,9 +12,7 @@ class EntityChangeLogPackage extends BasePackage
 
     public function dependencies(): array
     {
-        return [
-            EntityEventsPackage::instance(),
-        ];
+        return [];
     }
 
     public function sourceDirectory(): string
