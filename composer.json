@@ -17,7 +17,6 @@
     "morphp/medas-core": "^3",
     "morphp/medas-entity-manager": "^3",
     "morphp/medas-json": "^3",
-    "morphp/medas-storage-manager": "^4",
     "php": "^8.4"
   },
   "require-dev": {
@@ -25,6 +24,7 @@
     "morphp/medas-json-storage": "^4",
     "morphp/medas-ramsey-uuid-bridge": "^3",
     "morphp/medas-service-manager": "^3",
+    "morphp/medas-storage-manager": "^4",
     "phpunit/phpunit": "^10"
   },
   "autoload": {
