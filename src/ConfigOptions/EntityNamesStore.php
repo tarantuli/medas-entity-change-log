@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Medas\EntityChangeLog\ConfigOptions;
 
 use Medas\Core\{Attributes\Service, Interfaces\ConfigGroup, Interfaces\ConfigOption};
-use Medas\EntityManager\ConfigOptions\StoreNamesGroup;
 
 #[Service]
 readonly class EntityNamesStore implements ConfigOption
 {
     public function __construct(
-        private StoreNamesGroup $group,
+        private EntityChangeLogGroup $group,
     )
     {
     }
@@ -23,7 +22,7 @@ readonly class EntityNamesStore implements ConfigOption
 
     public function name(): string
     {
-        return 'entity-change-log-entity-names';
+        return 'entity-names-store';
     }
 
     public function description(): string

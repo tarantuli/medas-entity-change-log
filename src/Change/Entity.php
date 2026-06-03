@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Medas\EntityChangeLog\Change;
 
 use Medas\Core\{Interfaces\HasId, Types\Binary};
-use Medas\EntityChangeLog\ConfigOptions\{ChangeLogStorage, EntityNamesStore};
+use Medas\EntityChangeLog\ConfigOptions\{EntityNamesStore, StorageName};
 use Medas\EntityManager\Attributes\{
     Entity as EntityAttribute,
     Entity\StorageConfigOption,
@@ -13,7 +13,7 @@ use Medas\EntityManager\Attributes\{
     Id
 };
 
-#[EntityAttribute, StorageConfigOption(ChangeLogStorage::class), StoreConfigOption(EntityNamesStore::class)]
+#[EntityAttribute, StorageConfigOption(StorageName::class), StoreConfigOption(EntityNamesStore::class)]
 class Entity implements HasId
 {
     #[Id, Binary(length: 20)]

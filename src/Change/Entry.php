@@ -5,14 +5,11 @@ declare(strict_types=1);
 namespace Medas\EntityChangeLog\Change;
 
 use Medas\Core\{Interfaces\HasId, Interfaces\Uuid, Types\Binary};
-use Medas\EntityChangeLog\{
-    Change\Entity as ChangEntity,
-    ConfigOptions\ChangeLogStorage,
-    ConfigOptions\EntriesStoreName
-};
+use Medas\EntityChangeLog\Change\Entity as ChangeEntity;
+use Medas\EntityChangeLog\ConfigOptions\{EntriesStore, StorageName};
 use Medas\EntityManager\Attributes\{Entity, Id, IsCreationTimestamp};
 
-#[Entity, Entity\StorageConfigOption(ChangeLogStorage::class), Entity\StoreConfigOption(EntriesStoreName::class)]
+#[Entity, Entity\StorageConfigOption(StorageName::class), Entity\StoreConfigOption(EntriesStore::class)]
 class Entry implements HasId
 {
     #[Id]
@@ -21,15 +18,13 @@ class Entry implements HasId
     #[IsCreationTimestamp]
     public \DateTime $dateTime;
 
-    public ChangEntity $entity;
+    public ChangeEntity $entity;
     public string $entityId;
     public EntryType $type;
     public string|null $property;
 
     #[Binary(maxLength: Binary::MAX_2_BYTE_LENGTH)]
     public string|null $change;
-
-    public string|null $connectionId;
 
     public function id(): Uuid
     {

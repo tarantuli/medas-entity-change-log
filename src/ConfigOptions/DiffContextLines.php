@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Medas\EntityChangeLog\ConfigOptions;
 
 use Medas\Core\{Attributes\Service, Interfaces\ConfigGroup, Interfaces\ConfigOption};
-use Medas\EntityManager\ConfigOptions\StoreNamesGroup;
 
 #[Service]
 readonly class DiffContextLines implements ConfigOption
 {
     public function __construct(
-        private StoreNamesGroup $group,
+        private EntityChangeLogGroup $group,
     )
     {
     }
@@ -23,7 +22,7 @@ readonly class DiffContextLines implements ConfigOption
 
     public function name(): string
     {
-        return 'entity-change-log-diff-context-lines';
+        return 'diff-context-lines';
     }
 
     public function description(): string
