@@ -14,7 +14,7 @@
   "require": {
     "ext-zlib": "*",
     "jfcherng/php-diff": "^6.16",
-    "morphp/medas-core": "^3",
+    "morphp/medas-core": "^4",
     "morphp/medas-entity-manager": "^3",
     "morphp/medas-json": "^3",
     "php": "^8.4"
@@ -23,7 +23,8 @@
     "morphp/medas-config-manager": "^3",
     "morphp/medas-json-storage": "^4",
     "morphp/medas-ramsey-uuid-bridge": "^3",
-    "morphp/medas-service-manager": "^3",
+    "morphp/medas-object-instantiator": "^4",
+    "morphp/medas-service-manager": "^4",
     "morphp/medas-storage-manager": "^4",
     "phpunit/phpunit": "^10"
   },

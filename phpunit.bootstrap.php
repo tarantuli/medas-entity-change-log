@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 use Medas\ConfigManager\ConfigManagerPackage;
 use Medas\EntityChangeLog\EntityChangeLogPackage;
-use Medas\JsonStorage\JsonStoragePackage;
-use Medas\JsonStorage\StorageDirectory;
+use Medas\JsonStorage\{JsonStoragePackage, StorageDirectory};
+use Medas\ObjectInstantiator\ObjectInstantiator;
 use Medas\RamseyUuidBridge\RamseyUuidBridgePackage;
-use Medas\ServiceManager\{ServiceConfig, ServiceManager};
+use Medas\ServiceManager\{ServiceConfigBuilder, ServiceManager};
 use Medas\StorageManager\StorageManager;
 
 chdir(__DIR__);
 
-new ServiceManager(function (): ServiceConfig {
-    $config = new ServiceConfig();
+new ServiceManager(function (): ServiceConfigBuilder {
+    $config = new ServiceConfigBuilder(ObjectInstantiator::class);
 
     $config->addPackages([
         EntityChangeLogPackage::instance(),
@@ -25,6 +25,4 @@ new ServiceManager(function (): ServiceConfig {
     return $config;
 });
 
-\service(StorageManager::class)->add(
-    new StorageDirectory(__DIR__ . '/tests/Storage')
-);
+\service(StorageManager::class)->add(new StorageDirectory(__DIR__ . '/tests/Storage'));
