@@ -40,6 +40,9 @@ readonly class EntityController
 
     public function createSelector(object $entity): Selector
     {
-        return new HistorySelector($this->getChangeEntity($entity), $this->getEntityId($entity));
+        return new HistorySelector(
+            $this->getEntityId($this->getChangeEntity($entity)),
+            $this->getEntityId($entity)
+        );
     }
 }
