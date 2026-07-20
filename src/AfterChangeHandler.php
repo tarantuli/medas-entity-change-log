@@ -7,7 +7,6 @@ namespace Medas\EntityChangeLog;
 use Medas\Core\{Attributes\Service, Interfaces\EntityManager};
 use Medas\EntityManager\Attributes\Changes\{DontLogChanges, LogChanges};
 use Medas\EntityManager\Entities\{AfterFlushHandler, IdValue};
-use Medas\EntityManager\Repository;
 use Medas\EntityManager\Snapshots\Changes;
 
 #[Service]
@@ -17,7 +16,6 @@ readonly class AfterChangeHandler implements AfterFlushHandler
         private Change\EntryController $entryController,
         private EntityManager          $entityManager,
         private IdValue                $idValue,
-        private Repository             $repository,
     )
     {
     }
@@ -63,7 +61,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
         $entry = new Change\Entry();
 
         $entry->dateTime = new \DateTime();
-        $entry->entity = $this->getChangeEntity($entity);
+        $entry->entity = $this->entryController->getChangeEntity($entity);
         $entry->entityId = (string) $this->idValue->fromEntity($entity);
         $entry->type = Change\EntryType::EntityCreation;
         $job->entries[] = $entry;
@@ -101,7 +99,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
         $entry = new Change\Entry();
 
         $entry->dateTime = new \DateTime();
-        $entry->entity = $this->getChangeEntity($entity);
+        $entry->entity = $this->entryController->getChangeEntity($entity);
         $entry->entityId = (string) $this->idValue->fromEntity($entity);
         $entry->type = Change\EntryType::PropertyChange;
         $entry->property = $property;
@@ -131,18 +129,9 @@ readonly class AfterChangeHandler implements AfterFlushHandler
         $entry = new Change\Entry();
 
         $entry->dateTime = new \DateTime();
-        $entry->entity = $this->getChangeEntity($entity);
+        $entry->entity = $this->entryController->getChangeEntity($entity);
         $entry->entityId = (string) $this->idValue->fromEntity($entity);
         $entry->type = Change\EntryType::EntityDeletion;
         $job->entries[] = $entry;
-    }
-
-    private function getChangeEntity(object $entity): mixed
-    {
-        return $this->repository->getOrCreate(
-            Change\Entity::class,
-            ['nameHash' => sha1($entity::class, true)],
-            fn() => ['name' => $entity::class]
-        );
     }
 }
