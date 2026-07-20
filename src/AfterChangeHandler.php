@@ -60,7 +60,6 @@ readonly class AfterChangeHandler implements AfterFlushHandler
     {
         $entry = new Change\Entry();
 
-        $entry->dateTime = new \DateTime();
         $entry->entity = $this->entityController->getChangeEntity($entity);
         $entry->entityId = $this->entityController->getEntityId($entity);
         $entry->type = Change\EntryType::EntityCreation;
@@ -98,7 +97,6 @@ readonly class AfterChangeHandler implements AfterFlushHandler
 
         $entry = new Change\Entry();
 
-        $entry->dateTime = new \DateTime();
         $entry->entity = $this->entityController->getChangeEntity($entity);
         $entry->entityId = $this->entityController->getEntityId($entity);
         $entry->type = Change\EntryType::PropertyChange;
@@ -128,7 +126,6 @@ readonly class AfterChangeHandler implements AfterFlushHandler
     {
         $entry = new Change\Entry();
 
-        $entry->dateTime = new \DateTime();
         $entry->entity = $this->entityController->getChangeEntity($entity);
         $entry->entityId = $this->entityController->getEntityId($entity);
         $entry->type = Change\EntryType::EntityDeletion;
