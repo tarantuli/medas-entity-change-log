@@ -37,6 +37,6 @@ readonly class EntityNamesStore implements ConfigOption
 
     public function default(): string
     {
-        return 'entity-change-log-entities';
+        return 'entity_changelog_entities';
     }
 }

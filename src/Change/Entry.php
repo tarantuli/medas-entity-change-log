@@ -6,19 +6,21 @@ namespace Medas\EntityChangeLog\Change;
 
 use Medas\Core\{Interfaces\HasId, Interfaces\Uuid, Types\Binary};
 use Medas\EntityChangeLog\ConfigOptions\{EntriesStore, StorageName};
-use Medas\EntityManager\Attributes\{Entity as EntityAttr, Id, IsCreationTimestamp};
+use Medas\EntityManager\{Attributes\Entity as EntityAttr, Attributes\Id, Traits\Timestamps};
 
 #[EntityAttr, EntityAttr\StorageConfigOption(StorageName::class), EntityAttr\StoreConfigOption(EntriesStore::class)]
 class Entry implements HasId
 {
+    use Timestamps;
+
     #[Id]
     public Uuid $id;
 
-    #[IsCreationTimestamp]
-    public \DateTime $dateTime;
-
     public Entity $entity;
+
+    #[Binary]
     public string $entityId;
+
     public EntryType $type;
     public string|null $property;
 

@@ -37,6 +37,6 @@ readonly class EntriesStore implements ConfigOption
 
     public function default(): string
     {
-        return 'entity-change-log-changes';
+        return 'entity_changelog_changes';
     }
 }
