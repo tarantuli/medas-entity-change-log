@@ -7,7 +7,6 @@ namespace Medas\EntityChangeLog\Change;
 use Jfcherng\Diff\{DiffHelper, Renderer\RendererConstant};
 use Medas\Core\{Attributes\ConfigValue, Attributes\Service, Types\Binary};
 use Medas\EntityChangeLog\ConfigOptions\DiffContextLines;
-use Medas\EntityManager\Repository;
 use Medas\Json\{JsonEncoder, Settings};
 
 #[Service]
@@ -20,7 +19,6 @@ readonly class EntryController
 
         #[ConfigValue(DiffContextLines::class)]
         private int         $diffContextLines,
-        private Repository  $repository,
     )
     {
         $this->settings = new Settings(prettyPrint: true);
@@ -54,14 +52,5 @@ readonly class EntryController
     public function getChange(Entry $entry): string|null
     {
         return $entry->change === null ? null : gzinflate($entry->change);
-    }
-
-    public function getChangeEntity(object $entity): Entity
-    {
-        return $this->repository->getOrCreate(
-            Entity::class,
-            ['nameHash' => sha1($entity::class, true)],
-            fn() => ['name' => $entity::class]
-        );
     }
 }

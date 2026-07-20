@@ -27,7 +27,7 @@ readonly class HistorySelector implements Selector
         $this->definition = new Definition($this->entity())
             ->add(
                 WhereIs::c(Property::c('entity'), Value::c($entity->id())),
-                WhereIs::c(Property::c('id'), Value::c($id)),
+                WhereIs::c(Property::c('entityId'), Value::c($id)),
             );
     }
 
