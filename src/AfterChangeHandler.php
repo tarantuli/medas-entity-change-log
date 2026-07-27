@@ -95,7 +95,16 @@ readonly class AfterChangeHandler implements AfterFlushHandler
 
         $entry = $this->createEntry($entity);
 
-        $entry->type = Change\EntryType::PropertyChange;
+        if ($previous === null) {
+            $entry->type = Change\EntryType::PropertySet;
+        }
+        elseif ($current === null) {
+            $entry->type = Change\EntryType::PropertyUnset;
+        }
+        else {
+            $entry->type = Change\EntryType::PropertyChange;
+        }
+
         $entry->property = $property;
 
         $this->entryController->setChange($entry, $previous, $current);
