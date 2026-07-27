@@ -27,6 +27,8 @@ class Entry implements HasId
     #[Binary(maxLength: Binary::MAX_2_BYTE_LENGTH)]
     public string|null $change;
 
+    public string|null $user;
+
     public function id(): Uuid
     {
         return $this->id;

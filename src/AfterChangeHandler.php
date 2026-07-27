@@ -58,10 +58,8 @@ readonly class AfterChangeHandler implements AfterFlushHandler
 
     private function logCreation(Job $job, object $entity): void
     {
-        $entry = new Change\Entry();
+        $entry = $this->createEntry($entity);
 
-        $entry->entity = $this->entityController->getChangeEntity($entity);
-        $entry->entityId = $this->entityController->getEntityId($entity);
         $entry->type = Change\EntryType::EntityCreation;
         $job->entries[] = $entry;
 
@@ -95,10 +93,8 @@ readonly class AfterChangeHandler implements AfterFlushHandler
             return;
         }
 
-        $entry = new Change\Entry();
+        $entry = $this->createEntry($entity);
 
-        $entry->entity = $this->entityController->getChangeEntity($entity);
-        $entry->entityId = $this->entityController->getEntityId($entity);
         $entry->type = Change\EntryType::PropertyChange;
         $entry->property = $property;
 
@@ -124,11 +120,21 @@ readonly class AfterChangeHandler implements AfterFlushHandler
 
     private function logDeletion(Job $job, $entity): void
     {
+        $entry = $this->createEntry($entity);
+
+        $entry->type = Change\EntryType::EntityDeletion;
+        $job->entries[] = $entry;
+    }
+
+    private function createEntry(object $entity): Change\Entry
+    {
         $entry = new Change\Entry();
 
         $entry->entity = $this->entityController->getChangeEntity($entity);
         $entry->entityId = $this->entityController->getEntityId($entity);
-        $entry->type = Change\EntryType::EntityDeletion;
-        $job->entries[] = $entry;
+
+        dispatch(new Events\LoggingChange($entry, $entity));
+
+        return $entry;
     }
 }
