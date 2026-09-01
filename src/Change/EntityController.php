@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\EntityChangeLog\Change;
 
-use Medas\Core\{Attributes\Service, Interfaces\Uuid};
+use Medas\Core\{Attributes\Service, Interfaces\CacheManager, Interfaces\Uuid};
 use Medas\EntityChangeLog\Changelog\HistorySelector;
 use Medas\EntityManager\{Entities\IdValue, Repository, Selector\Selector};
 
@@ -12,18 +12,25 @@ use Medas\EntityManager\{Entities\IdValue, Repository, Selector\Selector};
 readonly class EntityController
 {
     public function __construct(
-        private IdValue    $idValue,
-        private Repository $repository,
+        private CacheManager $cacheManager,
+        private IdValue      $idValue,
+        private Repository   $repository,
     )
     {
     }
 
     public function getChangeEntity(object $entity): Entity
     {
-        return $this->repository->getOrCreate(
-            Entity::class,
-            ['nameHash' => sha1($entity::class, true)],
-            fn() => ['name' => $entity::class]
+        return $this->cacheManager->get('memory')->get(
+            ['entity-change-log', 'entity-name', $entity::class],
+            fn()
+                => $this->repository->getOrCreate(
+                    Entity::class,
+                    ['nameHash' => sha1($entity::class, true)],
+                    fn(
+                )
+                => ['name' => $entity::class]
+            )
         );
     }
 
