@@ -28,7 +28,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
             $this->entityManager->persist(...$job->entries);
         }
 
-        return (bool) $job->changes;
+        return $job->dispatchedEvents;
     }
 
     public function processChanges(Changes $changes): Job
