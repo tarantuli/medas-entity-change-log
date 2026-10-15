@@ -33,17 +33,24 @@ readonly class EntryController
 
         $differOptions = [
             'context' => $this->diffContextLines,
+        ];
+
+        // cliColorization is a renderer option; left at its default (auto) it adds ANSI colour codes
+        // whenever the change is logged from a terminal, e.g. while seeding from the console
+        $rendererOptions = [
             'cliColorization' => RendererConstant::CLI_COLOR_DISABLE,
         ];
 
         $diff = gzdeflate(DiffHelper::calculate(
             $previousJson . "\n",
             $currentJson . "\n",
-            differOptions: $differOptions
+            differOptions: $differOptions,
+            rendererOptions: $rendererOptions
         ));
 
+        // The marker is deflated as well, so getChange() can inflate every stored value alike
         if (strlen($diff) > Binary::MAX_2_BYTE_LENGTH) {
-            $diff = 'too large to store';
+            $diff = gzdeflate('too large to store');
         }
 
         $entry->change = $diff;
@@ -51,6 +58,13 @@ readonly class EntryController
 
     public function getChange(Entry $entry): string|null
     {
-        return $entry->change === null ? null : gzinflate($entry->change);
+        if ($entry->change === null) {
+            return null;
+        }
+
+        $change = gzinflate($entry->change);
+
+        // Entries stored before the colourisation fix may still hold ANSI colour codes
+        return preg_replace('/\e\[[0-9;]*m/', '', $change);
     }
 }
