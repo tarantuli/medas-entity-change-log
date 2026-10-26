@@ -26,7 +26,7 @@ readonly class OwnerResolver
         $owners = [];
         $visited = new \SplObjectStorage();
 
-        $visited->attach($entity);
+        $visited->offsetSet($entity);
 
         $this->collectOwners($entity, $owners, $visited);
 
@@ -45,11 +45,11 @@ readonly class OwnerResolver
             $owner = $property->getValue($entity);
 
             // Guards against two entities marked towards each other
-            if ($owner === null || $visited->contains($owner)) {
+            if ($owner === null || $visited->offsetExists($owner)) {
                 continue;
             }
 
-            $visited->attach($owner);
+            $visited->offsetSet($owner);
 
             $owners[] = $owner;
 

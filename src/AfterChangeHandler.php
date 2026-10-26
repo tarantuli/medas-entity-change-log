@@ -159,7 +159,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
     /** @return object[] */
     private function listedUnder(Job $job, object $entity): array
     {
-        if (!$job->listedUnder->contains($entity)) {
+        if (!$job->listedUnder->offsetExists($entity)) {
             $job->listedUnder[$entity] = [$entity, ...$this->ownerResolver->owners($entity)];
         }
 
