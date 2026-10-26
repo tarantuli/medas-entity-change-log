@@ -6,6 +6,7 @@ use Medas\ConfigManager\ConfigManagerPackage;
 use Medas\EntityChangeLog\EntityChangeLogPackage;
 use Medas\JsonStorage\{JsonStoragePackage, StorageDirectory};
 use Medas\ObjectInstantiator\ObjectInstantiator;
+use Medas\ObjectInstantiator\ObjectInstantiatorPackage;
 use Medas\RamseyUuidBridge\RamseyUuidBridgePackage;
 use Medas\ServiceManager\{ServiceConfigBuilder, ServiceManager};
 use Medas\StorageManager\StorageManager;
@@ -16,10 +17,11 @@ new ServiceManager(function (): ServiceConfigBuilder {
     $config = new ServiceConfigBuilder(ObjectInstantiator::class);
 
     $config->addPackages([
+        ConfigManagerPackage::instance(),
         EntityChangeLogPackage::instance(),
         JsonStoragePackage::instance(),
+        ObjectInstantiatorPackage::instance(),
         RamseyUuidBridgePackage::instance(),
-        ConfigManagerPackage::instance(),
     ]);
 
     return $config;

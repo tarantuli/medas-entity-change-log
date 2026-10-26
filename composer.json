@@ -15,7 +15,7 @@
     "ext-zlib": "*",
     "jfcherng/php-diff": "^6.16",
     "morphp/medas-core": "^4",
-    "morphp/medas-entity-manager": "^3",
+    "morphp/medas-entity-manager": "^3.15",
     "morphp/medas-json": "^3",
     "php": "^8.4"
   },

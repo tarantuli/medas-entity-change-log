@@ -6,7 +6,7 @@ namespace Medas\EntityChangeLogTest\Functional;
 
 use Medas\EntityChangeLog\AfterChangeHandler;
 use Medas\EntityChangeLogTest\MockUps\Task;
-use Medas\EntityManager\Snapshots\{Changes, PropertyChange};
+use Medas\EntityManager\Snapshots\{Changes, PropertyChange, Snapshot};
 use PHPUnit\Framework\TestCase;
 
 class AfterChangeHandlerTest extends TestCase
@@ -20,7 +20,7 @@ class AfterChangeHandlerTest extends TestCase
 
         $changes = new Changes();
 
-        $changes->addCreate($task, []);
+        $changes->addCreate($task, [], new Snapshot());
 
         $job = service(AfterChangeHandler::class)->processChanges($changes);
 
@@ -42,7 +42,8 @@ class AfterChangeHandlerTest extends TestCase
 
         $changes->addUpdate(
             $task,
-            ['description' => new PropertyChange('Test change log', 'Test change log 2')]
+            ['description' => new PropertyChange('Test change log', 'Test change log 2')],
+            new Snapshot()
         );
 
         $job = service(AfterChangeHandler::class)->processChanges($changes);
@@ -69,7 +70,8 @@ class AfterChangeHandlerTest extends TestCase
 
         $changes->addUpdate(
             $task,
-            ['description' => new PropertyChange($initialDescription, $secondDescreiption)]
+            ['description' => new PropertyChange($initialDescription, $secondDescreiption)],
+            new Snapshot()
         );
 
         $job = service(AfterChangeHandler::class)->processChanges($changes);

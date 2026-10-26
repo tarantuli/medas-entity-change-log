@@ -15,6 +15,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
     public function __construct(
         private Change\EntityController $entityController,
         private Change\EntryController  $entryController,
+        private Change\OwnerResolver    $ownerResolver,
         private EntityManager           $entityManager,
     )
     {
@@ -25,7 +26,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
         $job = $this->processChanges($changes);
 
         if ($job->dispatchedEvents) {
-            $this->entityManager->persist(...$job->entries);
+            $this->entityManager->persist(...$job->entries, ...$job->listings);
         }
 
         return $job->dispatchedEvents;
@@ -58,7 +59,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
 
     private function logCreation(Job $job, object $entity): void
     {
-        $entry = $this->createEntry($entity);
+        $entry = $this->createEntry($job, $entity);
 
         $entry->type = Change\EntryType::EntityCreation;
         $job->entries[] = $entry;
@@ -93,7 +94,7 @@ readonly class AfterChangeHandler implements AfterFlushHandler
             return;
         }
 
-        $entry = $this->createEntry($entity);
+        $entry = $this->createEntry($job, $entity);
 
         if ($previous === null) {
             $entry->type = Change\EntryType::PropertySet;
@@ -129,13 +130,13 @@ readonly class AfterChangeHandler implements AfterFlushHandler
 
     private function logDeletion(Job $job, $entity): void
     {
-        $entry = $this->createEntry($entity);
+        $entry = $this->createEntry($job, $entity);
 
         $entry->type = Change\EntryType::EntityDeletion;
         $job->entries[] = $entry;
     }
 
-    private function createEntry(object $entity): Change\Entry
+    private function createEntry(Job $job, object $entity): Change\Entry
     {
         $entry = new Change\Entry();
 
@@ -144,6 +145,24 @@ readonly class AfterChangeHandler implements AfterFlushHandler
 
         dispatch(new Events\LoggingChange($entry, $entity));
 
+        foreach ($this->listedUnder($job, $entity) as $listedEntity) {
+            $job->listings[] = new Change\HistoryListing(
+                $entry,
+                $this->entityController->getChangeEntity($listedEntity),
+                $this->entityController->getEntityId($listedEntity)
+            );
+        }
+
         return $entry;
+    }
+
+    /** @return object[] */
+    private function listedUnder(Job $job, object $entity): array
+    {
+        if (!$job->listedUnder->contains($entity)) {
+            $job->listedUnder[$entity] = [$entity, ...$this->ownerResolver->owners($entity)];
+        }
+
+        return $job->listedUnder[$entity];
     }
 }
